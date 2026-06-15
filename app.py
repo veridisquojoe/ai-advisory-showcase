@@ -26,8 +26,8 @@ from src.govai_lookup import (
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="AI Task Advisor",
-    page_icon="🧠",
+    page_title="WorkAI Compass",
+    page_icon="🧭",
     layout="wide",
 )
 
@@ -49,19 +49,19 @@ def color_category(val):
 
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.title("🧠 AI Task Advisor")
+st.title("🧭 WorkAI Compass")
 st.caption(
-    "Classify any role's tasks by AI approach — using the "
+    "Navigate AI's impact on any role — task-by-task classification using the "
     "[PMI/CPMAI](https://www.pmi.org/certifications/ai-project-management-cpmai) "
-    "taxonomy — with tool recommendations, ROI estimates, and occupation-level "
-    "AI vulnerability data from Manning & Aguirre (2025) / GovAI."
+    "framework, ROI estimates, and occupation-level AI vulnerability data "
+    "from Manning & Aguirre (2025) / GovAI."
 )
 
 # ── Sidebar: methodology ──────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### About this tool")
+    st.markdown("### About WorkAI Compass")
     st.markdown(
-        "This advisor applies the **PMI CPMAI task classification framework** "
+        "**WorkAI Compass** applies the **PMI CPMAI task classification framework** "
         "to break down any role into its component tasks and assess which AI "
         "approach fits each one.\n\n"
         "**Four categories:**\n\n"
@@ -413,7 +413,13 @@ with tab_analyze:
         df_tasks["tools_str"] = df_tasks["tools"].apply(
             lambda x: ", ".join(x) if isinstance(x, list) else x
         )
-        df_tasks["annual_savings_fmt"] = df_tasks["annual_savings"].apply(lambda x: f"${x:,}")
+        def _fmt_savings(row) -> str:
+            if row.get("category") == "Human Only":
+                return "Fundamental" if row.get("complexity") == "High" else "—"
+            s = row.get("annual_savings", 0)
+            return f"${s:,}" if s else "—"
+
+        df_tasks["annual_savings_fmt"] = df_tasks.apply(_fmt_savings, axis=1)
         df_tasks["time_impact"] = df_tasks.apply(
             lambda r: f"{r['weekly_hours']} hrs/wk → save {r['hours_saved_weekly']}", axis=1
         )
@@ -495,9 +501,10 @@ with tab_analyze:
     st.divider()
     st.caption(
         "Methodology: [PMI CPMAI](https://www.pmi.org/certifications/ai-project-management-cpmai) · "
-        "AI analysis powered by Claude (Anthropic) · "
+        "AI analysis: Claude (Anthropic) · "
         "Vulnerability data: [Manning & Aguirre (2025)](https://www.nber.org/papers/w34705) / GovAI · "
-        "Built by [Joseph Eldredge](https://eldredgemgmtconsulting.com), PMP · CPMAI"
+        "Built by [Joseph Eldredge](https://eldredgemgmtconsulting.com), PMP · CPMAI · "
+        "[Source code](https://github.com/veridisquojoe/ai-advisory-showcase)"
     )
 
 
