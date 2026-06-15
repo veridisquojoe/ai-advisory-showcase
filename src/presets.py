@@ -3,12 +3,15 @@ presets.py
 ----------
 Pre-seeded use cases for the two showcase verticals.
 These load instantly without an API call, so demos work even without connectivity.
+
+Each entry now includes `industry_group` to anchor it in the industry-first UI flow.
 """
 
 PRESETS = {
     "Real Estate Agent": {
         "role": "Real Estate Agent",
         "industry": "Residential Real Estate",
+        "industry_group": "Finance, Insurance & Real Estate",
         "hourly_rate": 65,
         "context": (
             "Independent real estate agent handling buyer and seller clients. "
@@ -20,6 +23,7 @@ PRESETS = {
     "API Developer": {
         "role": "API Developer",
         "industry": "Software Development / Fintech",
+        "industry_group": "Technology & IT",
         "hourly_rate": 120,
         "context": (
             "Backend software engineer building and maintaining REST and GraphQL APIs. "
@@ -31,6 +35,7 @@ PRESETS = {
     "Loan Officer": {
         "role": "Loan Officer",
         "industry": "Financial Services / Banking",
+        "industry_group": "Finance, Insurance & Real Estate",
         "hourly_rate": 85,
         "context": (
             "Residential mortgage loan officer at a community bank or credit union. "
@@ -43,6 +48,7 @@ PRESETS = {
     "Nonprofit Program Director": {
         "role": "Nonprofit Program Director",
         "industry": "Nonprofit / Social Services",
+        "industry_group": "Social Services & Community",
         "hourly_rate": 55,
         "context": (
             "Program director at a mid-sized nonprofit managing multiple grant-funded programs. "
@@ -55,6 +61,7 @@ PRESETS = {
     "Healthcare Operations Manager": {
         "role": "Healthcare Operations Manager",
         "industry": "Healthcare / Hospital Systems",
+        "industry_group": "Healthcare & Medical",
         "hourly_rate": 90,
         "context": (
             "Operations manager at a mid-sized medical practice or hospital department. "
@@ -67,6 +74,7 @@ PRESETS = {
     "Government Program Manager": {
         "role": "Government Program Manager",
         "industry": "Federal / State Government",
+        "industry_group": "Government & Public Safety",
         "hourly_rate": 95,
         "context": (
             "Program manager at a federal or state agency overseeing a multi-year, "
