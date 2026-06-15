@@ -12,6 +12,7 @@ import streamlit as st
 import pandas as pd
 from src.classifier import classify_role
 from src.presets import PRESETS
+from src.govai_lookup import lookup_occupation, data_available
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -136,6 +137,99 @@ if "last_result" in st.session_state:
         f"${roi.get('total_annual_savings', 0):,.0f}",
         help=f"Based on ${roi.get('hourly_rate', 0):.0f}/hr fully-loaded rate × hours saved × 52 weeks",
     )
+
+    st.divider()
+
+    # ── GovAI Vulnerability Panel ─────────────────────────────────────────────
+    govai = lookup_occupation(result.get("role", role), industry.strip())
+    if govai and govai["match_score"] >= 0.25:
+        exp_pct = govai["ai_exposure_pct"] * 100
+        ac_pct = govai["adaptive_capacity"] * 100
+        exposure_raw = govai["ai_exposure"] * 100
+        is_vuln = govai["is_vulnerable"]
+
+        vuln_color = "#e74c3c" if is_vuln else "#2ecc71"
+        vuln_label = "⚠️ Elevated vulnerability" if is_vuln else "✅ Lower vulnerability"
+        vuln_explain = (
+            "High AI exposure + low adaptive capacity" if is_vuln
+            else "Either low AI exposure or strong adaptive capacity"
+        )
+
+        st.markdown("#### AI Vulnerability Assessment")
+        st.markdown(
+            f"<small>Matched to: <em>{govai['matched_occupation']}</em> "
+            f"(similarity {govai['match_score']:.0%}) · "
+            f"Source: Manning & Aguirre (2025) / GovAI · NBER w34705</small>",
+            unsafe_allow_html=True,
+        )
+
+        vc1, vc2, vc3, vc4 = st.columns(4)
+        vc1.metric(
+            "AI Exposure",
+            f"{exposure_raw:.0f}%",
+            help="Share of work tasks exposed to AI (Eloundou et al. 2024, human assessment). "
+                 "E1 + 50% × E2 formulation.",
+        )
+        vc2.metric(
+            "Exposure Percentile",
+            f"{exp_pct:.0f}th",
+            help="How this occupation ranks vs. all 356 occupations in the dataset.",
+        )
+        vc3.metric(
+            "Adaptive Capacity",
+            f"{ac_pct:.0f}th pctile",
+            help="Occupation's ability to navigate job transitions if displaced. "
+                 "Combines skill transferability, net liquid wealth, geographic density, "
+                 "and age composition (Manning & Aguirre 2025, main spec).",
+        )
+        vc4.markdown(
+            f"<div style='padding:12px 0 4px'>"
+            f"<div style='font-size:12px; color: #888; margin-bottom:4px'>Vulnerability</div>"
+            f"<div style='font-size:15px; font-weight:700; color:{vuln_color}'>{vuln_label}</div>"
+            f"<div style='font-size:11px; color:#aaa; margin-top:4px'>{vuln_explain}</div>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
+
+        # Compute our own "vulnerability %" from Claude's task breakdown
+        llm_auto_tasks = [
+            t for t in tasks if t.get("category") in ("LLM", "Automation", "Traditional ML")
+        ]
+        our_vuln_pct = 0
+        if tasks:
+            our_hours = sum(t.get("weekly_hours", 0) for t in llm_auto_tasks)
+            total_hours = sum(t.get("weekly_hours", 0) for t in tasks)
+            our_vuln_pct = (our_hours / total_hours * 100) if total_hours else 0
+
+        with st.expander("📊 How these scores compare"):
+            st.markdown(
+                f"**GovAI AI exposure score: {exposure_raw:.0f}%** — "
+                f"the research team assessed what share of this occupation's tasks "
+                f"fall into GPT-4-level exposure categories.\n\n"
+                f"**Our task-level analysis: {our_vuln_pct:.0f}% of weekly hours** are in "
+                f"AI-automatable categories (LLM, Traditional ML, or Automation) "
+                f"based on Claude's breakdown above.\n\n"
+                f"The two measures capture different things: the GovAI score reflects "
+                f"*potential exposure* across all workers in the occupation; our analysis "
+                f"reflects *which specific tasks* are actionable starting points for "
+                f"AI adoption in this role. The gap between them is a consulting "
+                f"conversation — where does the real opportunity lie?\n\n"
+                f"**Adaptive capacity ({ac_pct:.0f}th percentile)** measures how well "
+                f"workers in this occupation could navigate a job transition if displaced: "
+                f"skill transferability, financial resilience, geographic mobility, and "
+                f"age composition. High exposure with high adaptive capacity = disruptive "
+                f"but manageable. High exposure with low adaptive capacity = the workers "
+                f"Manning & Aguirre flag as most at risk.\n\n"
+                f"*Source: [Manning & Aguirre (2025)](https://www.nber.org/papers/w34705) · "
+                f"[Replication data](https://github.com/t6aguirre/adaptive-capacity-index) (MIT) · "
+                f"AI exposure from [Eloundou et al. (2024)](https://doi.org/10.1126/science.adj0998)*"
+            )
+
+    elif data_available():
+        st.info(
+            "ℹ️ GovAI occupation data loaded but no close match found for this role. "
+            "Try a more common job title for vulnerability scores."
+        )
 
     st.divider()
 
