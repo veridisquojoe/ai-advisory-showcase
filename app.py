@@ -41,7 +41,7 @@ def color_category(val):
 st.title("🧠 AI Task Advisor")
 st.caption(
     "Enter any role to see how AI can augment it — classified by the "
-    "[PMI/CPMAI](https://www.pmi.org/certifications/artificial-intelligence-cpmai) "
+    "[PMI/CPMAI](https://www.pmi.org/certifications/ai-project-management-cpmai) "
     "AI task taxonomy with tool recommendations and ROI estimates."
 )
 st.divider()
@@ -253,7 +253,7 @@ if "last_result" in st.session_state:
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.divider()
 st.caption(
-    "Methodology: [PMI Certified Professional in Managing AI (CPMAI)](https://www.pmi.org/certifications/artificial-intelligence-cpmai) · "
+    "Methodology: [PMI Certified Professional in Managing AI (CPMAI)](https://www.pmi.org/certifications/ai-project-management-cpmai) · "
     "AI analysis powered by Claude (Anthropic) · "
     "Built by [Joseph Eldredge](https://eldredgemgmtconsulting.com), PMP · CPMAI"
 )
