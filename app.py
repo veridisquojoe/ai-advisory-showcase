@@ -197,10 +197,31 @@ with tab_analyze:
             placeholder="Describe key workflows, tools used, pain points, or team size...",
         )
 
+        # ── Usage limit ────────────────────────────────────────────────────────
+        MAX_ANALYSES = 5
+        if "analyses_used" not in st.session_state:
+            st.session_state["analyses_used"] = 0
+
+        used = st.session_state["analyses_used"]
+        remaining = MAX_ANALYSES - used
+
+        if remaining > 0:
+            st.caption(
+                f"{'🟢' * remaining}{'⚫' * used} "
+                f"{remaining} of {MAX_ANALYSES} free analyses remaining this session."
+            )
+        else:
+            st.warning(
+                "You've used all 5 free analyses for this session. "
+                "Interested in unlimited access or a custom build for your organization? "
+                "[Get in touch.](mailto:eldredgemc2@gmail.com)",
+                icon="💡",
+            )
+
         analyze = st.button(
             "Analyze role →",
             type="primary",
-            disabled=not role.strip(),
+            disabled=not role.strip() or remaining <= 0,
         )
 
     # ── Analysis ───────────────────────────────────────────────────────────────
@@ -224,6 +245,7 @@ with tab_analyze:
                 st.session_state["last_industry"] = claude_industry
                 st.session_state["last_is_govai"] = is_govai_occupation
                 st.session_state["last_govai_title"] = role.strip() if is_govai_occupation else None
+                st.session_state["analyses_used"] = st.session_state.get("analyses_used", 0) + 1
             except Exception as e:
                 st.error(f"Analysis failed: {e}")
                 st.stop()
