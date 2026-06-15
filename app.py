@@ -200,7 +200,7 @@ if "last_result" in st.session_state:
     styled = (
         df[display_cols]
         .rename(columns=col_labels)
-        .style.applymap(color_category, subset=["AI Method"])
+        .style.map(color_category, subset=["AI Method"])
     )
 
     st.dataframe(styled, use_container_width=True, hide_index=True, height=420)
