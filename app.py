@@ -63,7 +63,7 @@ with st.sidebar:
     st.markdown(
         "**WorkAI Compass** applies the **PMI CPMAI task classification framework** "
         "to break down any role into its component tasks and assess which AI "
-        "approach fits each one.\n\n"
+        "delivery method fits each one.\n\n"
         "**Four categories:**\n\n"
         "🔵 **LLM** — language generation, summarization, Q&A, drafting\n\n"
         "🟠 **Traditional ML** — prediction, classification, anomaly detection\n\n"
