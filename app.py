@@ -275,6 +275,18 @@ with tab_analyze:
             help=f"Based on ${roi.get('hourly_rate', 0):.0f}/hr × hours saved × 52 weeks",
         )
 
+        # ── In-page nav ───────────────────────────────────────────────────────
+        st.markdown(
+            "<div style='margin: 12px 0 4px; font-size:13px; color:#888;'>"
+            "Jump to: "
+            "<a href='#ai-vulnerability-assessment'>AI Vulnerability</a> &nbsp;·&nbsp; "
+            "<a href='#category-breakdown'>Category breakdown</a> &nbsp;·&nbsp; "
+            "<a href='#task-by-task-analysis'>Task table</a> &nbsp;·&nbsp; "
+            "<a href='#implementation-roadmap'>Roadmap</a>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
         st.divider()
 
         # ── GovAI Vulnerability Panel ─────────────────────────────────────────
