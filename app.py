@@ -34,6 +34,261 @@ st.set_page_config(
     layout="wide",
 )
 
+# ── Custom theme (Curricula-inspired: warm parchment, editorial) ──────────────
+st.markdown(
+    """
+    <style>
+    /* ── Fonts ──────────────────────────────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+    html, body, [class*="css"], .stApp {
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* ── App background ─────────────────────────────────────────────────── */
+    .stApp { background-color: #FAF7F2; }
+    .stApp > header { background-color: #FAF7F2; border-bottom: 1px solid #E2D9CE; }
+
+    /* ── Main content padding ───────────────────────────────────────────── */
+    .block-container {
+        padding-top: 1.75rem;
+        padding-bottom: 3rem;
+        max-width: 1100px;
+    }
+
+    /* ── Sidebar ────────────────────────────────────────────────────────── */
+    [data-testid="stSidebar"],
+    [data-testid="stSidebarContent"] {
+        background-color: #F0EBE3 !important;
+        border-right: 1px solid #E2D9CE;
+    }
+    [data-testid="stSidebar"] h3 {
+        font-family: 'Libre Baskerville', Georgia, serif;
+        font-size: 1rem;
+        color: #2D2926;
+        letter-spacing: -0.01em;
+    }
+
+    /* ── Typography ─────────────────────────────────────────────────────── */
+    h1 {
+        font-family: 'Libre Baskerville', Georgia, serif !important;
+        font-size: 1.8rem !important;
+        font-weight: 700 !important;
+        color: #2D2926 !important;
+        letter-spacing: -0.02em;
+    }
+    h2 {
+        font-family: 'Libre Baskerville', Georgia, serif !important;
+        color: #2D2926 !important;
+        letter-spacing: -0.015em;
+    }
+    h3, h4 {
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 600 !important;
+        color: #2D2926 !important;
+        letter-spacing: -0.01em;
+    }
+    p, li { color: #3D3530; line-height: 1.7; }
+
+    /* ── Tabs ───────────────────────────────────────────────────────────── */
+    .stTabs [data-baseweb="tab-list"] {
+        background-color: transparent !important;
+        border-bottom: 1px solid #E2D9CE;
+        gap: 2px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: transparent !important;
+        color: #6B6259 !important;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 6px 6px 0 0;
+        border: 1px solid transparent !important;
+        border-bottom: none !important;
+        transition: all 0.15s ease;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        background-color: #F0EBE3 !important;
+        color: #2D2926 !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #FAF7F2 !important;
+        color: #2D2926 !important;
+        font-weight: 600 !important;
+        border-color: #E2D9CE !important;
+        border-bottom-color: #FAF7F2 !important;
+        box-shadow: 0 -2px 0 #4A5580 inset;
+    }
+    .stTabs [data-baseweb="tab-panel"] {
+        padding-top: 1.25rem;
+    }
+
+    /* ── Metrics ────────────────────────────────────────────────────────── */
+    [data-testid="metric-container"] {
+        background-color: #F5F0E8;
+        border: 1px solid #E2D9CE;
+        border-radius: 10px;
+        padding: 1rem 1.2rem;
+    }
+    [data-testid="metric-container"] label {
+        color: #8C7F74 !important;
+        font-size: 0.8rem !important;
+        font-weight: 500 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+    [data-testid="metric-container"] [data-testid="stMetricValue"] {
+        color: #2D2926 !important;
+        font-weight: 700 !important;
+    }
+
+    /* ── Buttons ────────────────────────────────────────────────────────── */
+    .stButton > button {
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        border-radius: 7px;
+        transition: all 0.15s ease;
+        letter-spacing: -0.01em;
+    }
+    .stButton > button[kind="primary"] {
+        background-color: #4A5580 !important;
+        border-color: #4A5580 !important;
+        color: #FAF7F2 !important;
+    }
+    .stButton > button[kind="primary"]:hover:not(:disabled) {
+        background-color: #3D4870 !important;
+        border-color: #3D4870 !important;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(74,85,128,0.25);
+    }
+    .stButton > button[kind="primary"]:disabled {
+        background-color: #C5BFB5 !important;
+        border-color: #C5BFB5 !important;
+        color: #FAF7F2 !important;
+    }
+    .stButton > button[kind="secondary"] {
+        background-color: transparent !important;
+        border-color: #E2D9CE !important;
+        color: #2D2926 !important;
+    }
+    .stButton > button[kind="secondary"]:hover {
+        background-color: #F0EBE3 !important;
+        border-color: #C5BFB5 !important;
+    }
+
+    /* ── Inputs ─────────────────────────────────────────────────────────── */
+    [data-baseweb="select"] > div,
+    [data-baseweb="input"] > div,
+    [data-baseweb="textarea"] {
+        background-color: #F5F0E8 !important;
+        border-color: #DDD5C8 !important;
+        border-radius: 7px !important;
+    }
+    [data-baseweb="select"] > div:focus-within,
+    [data-baseweb="input"] > div:focus-within {
+        border-color: #4A5580 !important;
+        box-shadow: 0 0 0 2px rgba(74,85,128,0.15) !important;
+    }
+    textarea {
+        background-color: #F5F0E8 !important;
+        border-radius: 7px !important;
+    }
+    .stNumberInput input {
+        background-color: #F5F0E8 !important;
+    }
+    /* Select slider */
+    [data-testid="stSlider"] .rc-slider-track { background-color: #4A5580; }
+    [data-testid="stSlider"] .rc-slider-handle {
+        border-color: #4A5580;
+        background-color: #FAF7F2;
+    }
+
+    /* ── Expanders ──────────────────────────────────────────────────────── */
+    .streamlit-expanderHeader {
+        background-color: #F5F0E8 !important;
+        border: 1px solid #E2D9CE !important;
+        border-radius: 8px !important;
+        font-weight: 500;
+        color: #2D2926 !important;
+    }
+    .streamlit-expanderHeader:hover {
+        background-color: #EDE7DC !important;
+    }
+    .streamlit-expanderContent {
+        border: 1px solid #E2D9CE !important;
+        border-top: none !important;
+        border-radius: 0 0 8px 8px !important;
+        background-color: #FDFAF6 !important;
+    }
+
+    /* ── Alert / info / success / warning boxes ──────────────────────────── */
+    [data-testid="stNotificationContentInfo"] {
+        background-color: #EEF0F8 !important;
+        border-left-color: #4A5580 !important;
+        border-radius: 8px;
+    }
+    [data-testid="stNotificationContentSuccess"] {
+        background-color: #EDF3ED !important;
+        border-left-color: #5C7A5C !important;
+        border-radius: 8px;
+    }
+    [data-testid="stNotificationContentWarning"] {
+        background-color: #FBF3E8 !important;
+        border-left-color: #C4956A !important;
+        border-radius: 8px;
+    }
+    [data-testid="stNotificationContentError"] {
+        background-color: #F9EDED !important;
+        border-left-color: #B05C5C !important;
+        border-radius: 8px;
+    }
+    /* Streamlit 1.35+ alert wrappers */
+    .stAlert > div {
+        border-radius: 8px;
+    }
+
+    /* ── Dataframe ──────────────────────────────────────────────────────── */
+    [data-testid="stDataFrame"] {
+        border: 1px solid #E2D9CE;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* ── Divider ────────────────────────────────────────────────────────── */
+    hr {
+        border-color: #E2D9CE !important;
+        margin: 1.5rem 0 !important;
+    }
+
+    /* ── Caption / small text ───────────────────────────────────────────── */
+    .stCaption, .stCaption p {
+        color: #A09085 !important;
+        font-size: 0.8rem !important;
+        line-height: 1.6;
+    }
+
+    /* ── Radio buttons ──────────────────────────────────────────────────── */
+    [data-testid="stRadio"] label {
+        color: #3D3530;
+        font-size: 0.9rem;
+    }
+
+    /* ── App title & caption (header area) ──────────────────────────────── */
+    [data-testid="stAppViewContainer"] > .main .block-container > div:first-child h1 {
+        margin-bottom: 0.25rem;
+    }
+
+    /* ── Scrollbar ──────────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #F0EBE3; }
+    ::-webkit-scrollbar-thumb { background: #C5BFB5; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #A09085; }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # ── Category styling ──────────────────────────────────────────────────────────
 CATEGORY_COLORS = {
     "LLM": "#4f8ef7",
@@ -535,13 +790,23 @@ with tab_benchmark:
             fillcolor=_hex_to_rgba(tier_c, 0.2),
         ))
         radar_fig.update_layout(
-            polar=dict(radialaxis=dict(visible=True, range=[0, 4], tickvals=[1,2,3,4],
-                       ticktext=["1 Early","2 Developing","3 Advanced","4 Native"])),
+            polar=dict(
+                bgcolor="#F5F0E8",
+                radialaxis=dict(
+                    visible=True, range=[0, 4], tickvals=[1,2,3,4],
+                    ticktext=["1 Early","2 Developing","3 Advanced","4 Native"],
+                    gridcolor="#E2D9CE", linecolor="#E2D9CE",
+                    tickfont=dict(color="#8C7F74", size=10),
+                ),
+                angularaxis=dict(gridcolor="#E2D9CE", linecolor="#E2D9CE",
+                                 tickfont=dict(color="#2D2926", size=11)),
+            ),
             showlegend=True,
-            legend=dict(orientation="h", y=-0.15),
+            legend=dict(orientation="h", y=-0.15, font=dict(color="#2D2926")),
             height=380,
             margin=dict(l=60, r=60, t=40, b=60),
             paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="Inter, sans-serif", color="#2D2926"),
         )
         st.plotly_chart(radar_fig, use_container_width=True)
 
@@ -1055,7 +1320,7 @@ with tab_analyze:
         "AI analysis: Claude (Anthropic) · "
         "Vulnerability data: [Manning & Aguirre (2025)](https://www.nber.org/papers/w34705) / GovAI · "
         "Built by [Joseph Eldredge](https://eldredgemgmtconsulting.com), PMP · CPMAI · "
-        "[Source code](https://github.com/veridisquojoe/ai-advisory-showcase)"
+        "[Request source access](mailto:eldredgemc2@gmail.com?subject=WorkAI%20Compass%20%E2%80%94%20source%20code%20request)"
     )
 
 
@@ -1173,11 +1438,14 @@ with tab_explore:
 
         fig.update_layout(
             legend=dict(title="Industry Group", orientation="v", x=1.01, y=1),
-            xaxis=dict(title="AI Exposure (% of tasks)", range=[-2, 102]),
-            yaxis=dict(title="Adaptive Capacity (percentile)", range=[-2, 102]),
+            xaxis=dict(title="AI Exposure (% of tasks)", range=[-2, 102],
+                       gridcolor="#E2D9CE", linecolor="#E2D9CE"),
+            yaxis=dict(title="Adaptive Capacity (percentile)", range=[-2, 102],
+                       gridcolor="#E2D9CE", linecolor="#E2D9CE"),
             margin=dict(l=60, r=220, t=30, b=60),
             paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(248,248,248,0.5)",
+            plot_bgcolor="#F5F0E8",
+            font=dict(family="Inter, sans-serif", color="#2D2926"),
         )
         fig.update_traces(marker_size=8, selector=dict(mode="markers"))
 
@@ -1443,7 +1711,7 @@ rather than just impressive.
         st.markdown(
             "📧 [eldredgemc2@gmail.com](mailto:eldredgemc2@gmail.com) &nbsp;·&nbsp; "
             "🌐 [eldredgemgmtconsulting.com](https://eldredgemgmtconsulting.com) &nbsp;·&nbsp; "
-            "💻 [Source code](https://github.com/veridisquojoe/ai-advisory-showcase)",
+            "💻 [Request source access](mailto:eldredgemc2@gmail.com?subject=WorkAI%20Compass%20%E2%80%94%20source%20code%20request)",
             unsafe_allow_html=True,
         )
 
