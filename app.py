@@ -527,7 +527,7 @@ with st.sidebar:
     st.divider()
     st.markdown(
         "Built by [Joseph Eldredge](https://eldredgemgmtconsulting.com) · "
-        "PMP, CPMAI · AI advisory for SMBs and public sector organizations."
+        "PMP, CPMAI · AI impact advisory for all kinds of organizations."
     )
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
