@@ -95,7 +95,9 @@ st.markdown(
     .block-container {
         padding-top: 1.75rem;
         padding-bottom: 3rem;
-        max-width: 1100px;
+        padding-left: 2.5rem !important;
+        padding-right: 2.5rem !important;
+        max-width: 100% !important;
     }
 
     /* ── Sidebar ────────────────────────────────────────────────────────── */
