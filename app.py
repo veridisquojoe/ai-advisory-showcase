@@ -88,8 +88,8 @@ st.markdown(
     }
 
     /* ── App background ─────────────────────────────────────────────────── */
-    .stApp { background-color: #FAF7F2; }
-    .stApp > header { background-color: #FAF7F2; border-bottom: 1px solid #E2D9CE; }
+    .stApp { background-color: #F2F5FA; }
+    .stApp > header { background-color: #F2F5FA; border-bottom: 1px solid #CDD4E8; }
 
     /* ── Main content padding ───────────────────────────────────────────── */
     .block-container {
@@ -103,8 +103,8 @@ st.markdown(
     /* ── Sidebar ────────────────────────────────────────────────────────── */
     [data-testid="stSidebar"],
     [data-testid="stSidebarContent"] {
-        background-color: #F0EBE3 !important;
-        border-right: 1px solid #E2D9CE;
+        background-color: #E5EBF5 !important;
+        border-right: 1px solid #CDD4E8;
     }
     [data-testid="stSidebar"] h3 {
         font-family: 'Libre Baskerville', Georgia, serif;
@@ -137,7 +137,7 @@ st.markdown(
     /* ── Tabs ───────────────────────────────────────────────────────────── */
     .stTabs [data-baseweb="tab-list"] {
         background-color: transparent !important;
-        border-bottom: 1px solid #E2D9CE;
+        border-bottom: 1px solid #CDD4E8;
         gap: 2px;
     }
     .stTabs [data-baseweb="tab"] {
@@ -153,15 +153,15 @@ st.markdown(
         transition: all 0.15s ease;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        background-color: #F0EBE3 !important;
+        background-color: #E5EBF5 !important;
         color: #2D2926 !important;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #FAF7F2 !important;
+        background-color: #F2F5FA !important;
         color: #2D2926 !important;
         font-weight: 600 !important;
-        border-color: #E2D9CE !important;
-        border-bottom-color: #FAF7F2 !important;
+        border-color: #CDD4E8 !important;
+        border-bottom-color: #F2F5FA !important;
         box-shadow: 0 -2px 0 #4A5580 inset;
     }
     .stTabs [data-baseweb="tab-panel"] {
@@ -170,8 +170,8 @@ st.markdown(
 
     /* ── Metrics ────────────────────────────────────────────────────────── */
     [data-testid="metric-container"] {
-        background-color: #F5F0E8;
-        border: 1px solid #E2D9CE;
+        background-color: #EBF0F8;
+        border: 1px solid #CDD4E8;
         border-radius: 10px;
         padding: 1rem 1.2rem;
     }
@@ -198,7 +198,7 @@ st.markdown(
     .stButton > button[kind="primary"] {
         background-color: #4A5580 !important;
         border-color: #4A5580 !important;
-        color: #FAF7F2 !important;
+        color: #F2F5FA !important;
     }
     .stButton > button[kind="primary"]:hover:not(:disabled) {
         background-color: #3D4870 !important;
@@ -207,26 +207,26 @@ st.markdown(
         box-shadow: 0 3px 10px rgba(74,85,128,0.25);
     }
     .stButton > button[kind="primary"]:disabled {
-        background-color: #C5BFB5 !important;
-        border-color: #C5BFB5 !important;
-        color: #FAF7F2 !important;
+        background-color: #B0B8CE !important;
+        border-color: #B0B8CE !important;
+        color: #F2F5FA !important;
     }
     .stButton > button[kind="secondary"] {
         background-color: transparent !important;
-        border-color: #E2D9CE !important;
+        border-color: #CDD4E8 !important;
         color: #2D2926 !important;
     }
     .stButton > button[kind="secondary"]:hover {
-        background-color: #F0EBE3 !important;
-        border-color: #C5BFB5 !important;
+        background-color: #E5EBF5 !important;
+        border-color: #B0B8CE !important;
     }
 
     /* ── Inputs ─────────────────────────────────────────────────────────── */
     [data-baseweb="select"] > div,
     [data-baseweb="input"] > div,
     [data-baseweb="textarea"] {
-        background-color: #F5F0E8 !important;
-        border-color: #DDD5C8 !important;
+        background-color: #EBF0F8 !important;
+        border-color: #C8D2E5 !important;
         border-radius: 7px !important;
     }
     [data-baseweb="select"] > div:focus-within,
@@ -235,35 +235,35 @@ st.markdown(
         box-shadow: 0 0 0 2px rgba(74,85,128,0.15) !important;
     }
     textarea {
-        background-color: #F5F0E8 !important;
+        background-color: #EBF0F8 !important;
         border-radius: 7px !important;
     }
     .stNumberInput input {
-        background-color: #F5F0E8 !important;
+        background-color: #EBF0F8 !important;
     }
     /* Select slider */
     [data-testid="stSlider"] .rc-slider-track { background-color: #4A5580; }
     [data-testid="stSlider"] .rc-slider-handle {
         border-color: #4A5580;
-        background-color: #FAF7F2;
+        background-color: #F2F5FA;
     }
 
     /* ── Expanders ──────────────────────────────────────────────────────── */
     .streamlit-expanderHeader {
-        background-color: #F5F0E8 !important;
-        border: 1px solid #E2D9CE !important;
+        background-color: #EBF0F8 !important;
+        border: 1px solid #CDD4E8 !important;
         border-radius: 8px !important;
         font-weight: 500;
         color: #2D2926 !important;
     }
     .streamlit-expanderHeader:hover {
-        background-color: #EDE7DC !important;
+        background-color: #DCE4F2 !important;
     }
     .streamlit-expanderContent {
-        border: 1px solid #E2D9CE !important;
+        border: 1px solid #CDD4E8 !important;
         border-top: none !important;
         border-radius: 0 0 8px 8px !important;
-        background-color: #FDFAF6 !important;
+        background-color: #F7FAFE !important;
     }
 
     /* ── Alert / info / success / warning boxes ──────────────────────────── */
@@ -294,20 +294,20 @@ st.markdown(
 
     /* ── Dataframe ──────────────────────────────────────────────────────── */
     [data-testid="stDataFrame"] {
-        border: 1px solid #E2D9CE;
+        border: 1px solid #CDD4E8;
         border-radius: 8px;
         overflow: hidden;
     }
 
     /* ── Divider ────────────────────────────────────────────────────────── */
     hr {
-        border-color: #E2D9CE !important;
+        border-color: #CDD4E8 !important;
         margin: 1.5rem 0 !important;
     }
 
     /* ── Caption / small text ───────────────────────────────────────────── */
     .stCaption, .stCaption p {
-        color: #A09085 !important;
+        color: #8B96B2 !important;
         font-size: 0.8rem !important;
         line-height: 1.6;
     }
@@ -325,9 +325,9 @@ st.markdown(
 
     /* ── Scrollbar ──────────────────────────────────────────────────────── */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #F0EBE3; }
-    ::-webkit-scrollbar-thumb { background: #C5BFB5; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #A09085; }
+    ::-webkit-scrollbar-track { background: #E5EBF5; }
+    ::-webkit-scrollbar-thumb { background: #B0B8CE; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #8B96B2; }
     </style>
     """.replace("__TAB_ICON_CSS__", _TAB_ICON_CSS),
     unsafe_allow_html=True,
@@ -406,7 +406,7 @@ def _usage_pill(used: int, total: int, label: str = "analyses") -> str:
     color = "#4fc98e" if remaining > 2 else ("#f7a24f" if remaining > 0 else "#e74c3c")
 
     def _dot_bg(i: int) -> str:
-        return color if i < remaining else "#DDD5C8"
+        return color if i < remaining else "#C8D2E5"
 
     dots = "".join(
         f'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;'
@@ -415,7 +415,7 @@ def _usage_pill(used: int, total: int, label: str = "analyses") -> str:
     )
     return (
         f'<div style="display:inline-flex;align-items:center;gap:8px;'
-        f'padding:5px 12px;background:#F0EBE3;border:1px solid #E2D9CE;'
+        f'padding:5px 12px;background:#E5EBF5;border:1px solid #CDD4E8;'
         f'border-radius:20px;font-size:12px;color:#6B6259;margin:6px 0;">'
         f'<span style="display:flex;align-items:center;">{dots}</span>'
         f'<span><strong style="color:{color}">{remaining}</strong> of {total} {label} remaining</span>'
@@ -440,7 +440,7 @@ def _render_task_table(df: pd.DataFrame) -> str:
     header_style = (
         "padding:9px 12px;text-align:left;font-size:10.5px;font-weight:700;"
         "text-transform:uppercase;letter-spacing:0.06em;color:#8C7F74;"
-        "background:#F0EBE3;border-bottom:2px solid #E2D9CE;white-space:nowrap;"
+        "background:#E5EBF5;border-bottom:2px solid #CDD4E8;white-space:nowrap;"
     )
     headers = ["Task", "AI Method", "Why this method", "Tools", "Time", "Value", "Priority"]
 
@@ -459,7 +459,7 @@ def _render_task_table(df: pd.DataFrame) -> str:
             f'<span style="background:{p_bg};color:{p_fg};padding:2px 9px;'
             f'border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;">{priority}</span>'
         )
-        cell = "padding:10px 12px;border-bottom:1px solid #EDE7DC;vertical-align:top;"
+        cell = "padding:10px 12px;border-bottom:1px solid #DCE4F2;vertical-align:top;"
         rows_html += (
             f'<tr class="wai-tr">'
             f'<td style="{cell}font-weight:600;color:#2D2926;">{row.get("task","")}</td>'
@@ -478,8 +478,8 @@ def _render_task_table(df: pd.DataFrame) -> str:
     )
 
     return (
-        '<style>.wai-tr:hover td{background:#EDE7DC!important;}</style>'
-        '<div style="overflow-x:auto;border:1px solid #E2D9CE;border-radius:8px;background:#FDFAF6;">'
+        '<style>.wai-tr:hover td{background:#DCE4F2!important;}</style>'
+        '<div style="overflow-x:auto;border:1px solid #CDD4E8;border-radius:8px;background:#F7FAFE;">'
         '<table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;">'
         f'<thead><tr>{head_html}</tr></thead>'
         f'<tbody>{rows_html}</tbody>'
@@ -981,14 +981,14 @@ with tab_benchmark:
         ))
         radar_fig.update_layout(
             polar=dict(
-                bgcolor="#F5F0E8",
+                bgcolor="#EBF0F8",
                 radialaxis=dict(
                     visible=True, range=[0, 4], tickvals=[1,2,3,4],
                     ticktext=["1 Early","2 Developing","3 Advanced","4 Native"],
-                    gridcolor="#E2D9CE", linecolor="#E2D9CE",
+                    gridcolor="#CDD4E8", linecolor="#CDD4E8",
                     tickfont=dict(color="#8C7F74", size=10),
                 ),
-                angularaxis=dict(gridcolor="#E2D9CE", linecolor="#E2D9CE",
+                angularaxis=dict(gridcolor="#CDD4E8", linecolor="#CDD4E8",
                                  tickfont=dict(color="#2D2926", size=11)),
             ),
             showlegend=True,
@@ -1634,17 +1634,17 @@ with tab_explore:
         fig.add_annotation(
             x=88, y=8, text="⚠️ Vulnerable zone",
             showarrow=False, font=dict(size=11, color="rgba(200,60,60,0.9)"),
-            bgcolor="rgba(240,235,227,0.85)",
+            bgcolor="rgba(230,235,245,0.85)",
         )
         fig.add_annotation(
             x=12, y=90, text="✅ Lower risk",
             showarrow=False, font=dict(size=11, color="rgba(30,140,70,0.9)"),
-            bgcolor="rgba(240,235,227,0.85)",
+            bgcolor="rgba(230,235,245,0.85)",
         )
         fig.add_annotation(
             x=88, y=90, text="High exposure,\nstrong adaptive capacity",
             showarrow=False, font=dict(size=10, color="rgba(80,80,80,0.8)"),
-            bgcolor="rgba(240,235,227,0.85)",
+            bgcolor="rgba(230,235,245,0.85)",
             align="center",
         )
 
@@ -1665,12 +1665,12 @@ with tab_explore:
         fig.update_layout(
             legend=dict(title="Industry Group", orientation="v", x=1.01, y=1),
             xaxis=dict(title="AI Exposure (% of tasks)", range=[-2, 102],
-                       gridcolor="#E2D9CE", linecolor="#E2D9CE"),
+                       gridcolor="#CDD4E8", linecolor="#CDD4E8"),
             yaxis=dict(title="Adaptive Capacity (percentile)", range=[-2, 102],
-                       gridcolor="#E2D9CE", linecolor="#E2D9CE"),
+                       gridcolor="#CDD4E8", linecolor="#CDD4E8"),
             margin=dict(l=60, r=220, t=30, b=60),
             paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="#F5F0E8",
+            plot_bgcolor="#EBF0F8",
             font=dict(family="Inter, sans-serif", color="#2D2926"),
         )
         fig.update_traces(marker_size=8, selector=dict(mode="markers"))
