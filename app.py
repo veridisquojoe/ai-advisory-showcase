@@ -80,11 +80,12 @@ with st.sidebar:
     )
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
-tab_analyze, tab_exec, tab_benchmark, tab_explore = st.tabs([
+tab_analyze, tab_exec, tab_benchmark, tab_explore, tab_about = st.tabs([
     "🎯 Analyze a Role",
     "💼 Executive AI Brief",
     "📊 AI Adoption Benchmark",
     "🗺️ Explore All Occupations",
+    "ℹ️ About",
 ])
 
 
@@ -1223,4 +1224,239 @@ this app reflects it within the hour.
             "[Replication data](https://github.com/t6aguirre/adaptive-capacity-index) (MIT License) · "
             "AI exposure: [Eloundou et al. (2024)](https://doi.org/10.1126/science.adj0998) · "
             "Quadrant threshold: x=50% exposure, y=35th pctile adaptive capacity"
+        )
+
+
+# ════════════════════════════════════════════════════════════════════════════════
+# TAB 5 — ABOUT
+# ════════════════════════════════════════════════════════════════════════════════
+with tab_about:
+
+    # ── Mission ───────────────────────────────────────────────────────────────
+    st.markdown(
+        "<div style='max-width:720px; margin: 0 auto 2rem auto; text-align:center;'>"
+        "<h2 style='font-size:2rem; line-height:1.3; margin-bottom:1rem;'>"
+        "AI is moving fast. The data is out there.<br/>"
+        "<span style='color:#4f8ef7;'>WorkAI Compass helps you use it.</span>"
+        "</h2>"
+        "<p style='font-size:1.1rem; color:#888; line-height:1.7;'>"
+        "Every week brings new AI headlines — breakthroughs, warnings, and predictions that "
+        "seem to contradict each other. WorkAI Compass cuts through the noise with "
+        "peer-reviewed research, government labor data, and AI analysis to give you "
+        "a grounded, practical picture of what's actually happening."
+        "</p>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+    st.divider()
+
+    # ── Three lenses ──────────────────────────────────────────────────────────
+    st.markdown(
+        "<h3 style='text-align:center; margin-bottom:1.5rem;'>Three lenses, one tool</h3>",
+        unsafe_allow_html=True,
+    )
+
+    lens1, lens2, lens3 = st.columns(3)
+
+    def _lens_card(icon, title, body, tab_name, color):
+        return (
+            f"<div style='padding:20px; border-top:3px solid {color}; "
+            f"background:{color}0d; border-radius:6px; height:100%;'>"
+            f"<div style='font-size:2rem; margin-bottom:8px'>{icon}</div>"
+            f"<h4 style='margin:0 0 8px; color:{color}'>{title}</h4>"
+            f"<p style='font-size:0.9rem; color:#aaa; margin-bottom:10px; line-height:1.6'>{body}</p>"
+            f"<span style='font-size:11px; background:{color}22; color:{color}; "
+            f"padding:3px 8px; border-radius:12px;'>{tab_name}</span>"
+            f"</div>"
+        )
+
+    with lens1:
+        st.markdown(
+            _lens_card(
+                "🎯", "Your role",
+                "Select any job title and get a task-by-task breakdown of where AI can help, "
+                "what tools to consider, and what's worth protecting as uniquely human. "
+                "Grounded in the PMI CPMAI framework and real occupational data.",
+                "Analyze a Role tab",
+                "#4f8ef7",
+            ),
+            unsafe_allow_html=True,
+        )
+
+    with lens2:
+        st.markdown(
+            _lens_card(
+                "💼", "Your company",
+                "Two tools for organizational decision-makers: an AI investment brief "
+                "tailored to your industry, company type, and size — and an adoption "
+                "benchmark that shows where you stand relative to sector peers, "
+                "with specific gaps and priority actions.",
+                "Executive AI Brief · AI Adoption Benchmark",
+                "#4fc98e",
+            ),
+            unsafe_allow_html=True,
+        )
+
+    with lens3:
+        st.markdown(
+            _lens_card(
+                "🗺️", "The bigger picture",
+                "Explore 356 occupations from peer-reviewed NBER research, plotted by "
+                "AI exposure and adaptive capacity. See which roles and industries face "
+                "the greatest structural risk — and how different sectors compare.",
+                "Explore All Occupations tab",
+                "#f7a24f",
+            ),
+            unsafe_allow_html=True,
+        )
+
+    st.divider()
+
+    # ── Who it's for ──────────────────────────────────────────────────────────
+    st.markdown("### Who it's for")
+    aud1, aud2 = st.columns(2)
+
+    with aud1:
+        st.markdown(
+            """
+**Executives and business leaders** — CEOs, CFOs, and operations leaders who need a
+clear-eyed view of where AI investment will pay off for their specific organization,
+and how their adoption posture compares to competitors. Not a vendor pitch. No hype.
+
+**HR and talent professionals** — workforce planners and people leaders thinking about
+which roles are most affected, which skills need investment, and how to communicate
+AI's impact honestly with employees.
+            """
+        )
+
+    with aud2:
+        st.markdown(
+            """
+**Individual professionals** — anyone wondering how AI will change their own job.
+The role analyzer gives you a concrete, task-level answer specific to your field —
+not a generic "AI will automate X% of jobs" headline.
+
+**AI enthusiasts and practitioners** — people who follow the research and want an
+interactive interface to the best publicly available occupational AI data, without
+building it themselves.
+            """
+        )
+
+    st.divider()
+
+    # ── What makes it different ───────────────────────────────────────────────
+    st.markdown("### What makes it different")
+    diff1, diff2, diff3 = st.columns(3)
+
+    def _pillar(title, body):
+        return (
+            f"<div style='padding:16px; background:rgba(79,142,247,0.06); "
+            f"border-radius:6px; height:100%'>"
+            f"<h4 style='margin:0 0 8px'>{title}</h4>"
+            f"<p style='font-size:0.88rem; color:#aaa; line-height:1.6; margin:0'>{body}</p>"
+            f"</div>"
+        )
+
+    with diff1:
+        st.markdown(
+            _pillar(
+                "Data-first, not vendor-first",
+                "Every analysis draws on peer-reviewed research (NBER, Science journal), "
+                "U.S. government labor statistics, and the PMI CPMAI professional framework — "
+                "not a vendor's marketing claims about their own product."
+            ),
+            unsafe_allow_html=True,
+        )
+
+    with diff2:
+        st.markdown(
+            _pillar(
+                "Specific, not generic",
+                "The answers change meaningfully depending on your industry, company size, "
+                "and role. A 40-person nonprofit and a 5,000-person bank get very different "
+                "analyses — because they should."
+            ),
+            unsafe_allow_html=True,
+        )
+
+    with diff3:
+        st.markdown(
+            _pillar(
+                "Honest about limits",
+                "Each tool tells you what data it's drawing on, how current that data is, "
+                "and where the analysis is uncertain. The goal is to help you think clearly, "
+                "not to give you false confidence."
+            ),
+            unsafe_allow_html=True,
+        )
+
+    st.divider()
+
+    # ── Data & methodology ────────────────────────────────────────────────────
+    st.markdown("### Data & methodology")
+    st.markdown(
+        """
+WorkAI Compass combines four independent sources:
+
+**Manning & Aguirre (2025)** — "How Adaptable Are American Workers to AI-Induced Job
+Displacement?" NBER Working Paper 34705. Covers 356 occupations with AI exposure scores
+(from Eloundou et al., *Science* 2024) and an original adaptive capacity index measuring
+workers' ability to navigate displacement: skill transferability, financial resilience,
+geographic mobility, and age composition. MIT-licensed replication data.
+
+**PMI CPMAI task taxonomy** — The Project Management Institute's Certified AI Project
+Manager framework classifies AI work into four delivery methods: LLM, Traditional ML,
+Automation, and Human Only. Used as the analytical backbone of the role analyzer.
+
+**BLS Occupational Employment and Wage Statistics (OEWS)** — Employment counts
+incorporated into the Manning & Aguirre dataset. Updated annually by the Bureau of
+Labor Statistics.
+
+**Claude (Anthropic)** — The role analysis, executive brief, and benchmarking reports
+are generated by Claude using the above data as grounding context. All AI-generated
+analysis includes source attribution. The app runs on `claude-sonnet-4-6` by default;
+the Executive AI Brief tab offers `claude-opus-4-6` for more thorough analysis.
+        """
+    )
+
+    st.divider()
+
+    # ── About the builder ─────────────────────────────────────────────────────
+    st.markdown("### About the builder")
+    ab1, ab2 = st.columns([2, 1])
+
+    with ab1:
+        st.markdown(
+            """
+**Joseph Eldredge** is a program manager and AI strategy advisor based in Central Virginia,
+working with small and mid-sized organizations navigating complex technology decisions.
+He holds a PMP (Project Management Professional) and CPMAI (Certified AI Project Manager)
+certification, and has delivered programs spanning federal contracting, financial services,
+nonprofit operations, and public sector technology.
+
+WorkAI Compass is a working demonstration of the kind of analysis he brings to client
+engagements — built in public, grounded in real data, and designed to be genuinely useful
+rather than just impressive.
+            """
+        )
+        st.markdown(
+            "📧 [eldredgemc2@gmail.com](mailto:eldredgemc2@gmail.com) &nbsp;·&nbsp; "
+            "🌐 [eldredgemgmtconsulting.com](https://eldredgemgmtconsulting.com) &nbsp;·&nbsp; "
+            "💻 [Source code](https://github.com/veridisquojoe/ai-advisory-showcase)",
+            unsafe_allow_html=True,
+        )
+
+    with ab2:
+        st.markdown(
+            "<div style='padding:16px; background:rgba(79,201,142,0.08); "
+            "border:1px solid rgba(79,201,142,0.2); border-radius:8px;'>"
+            "<p style='font-size:0.85rem; color:#aaa; line-height:1.7; margin:0;'>"
+            "Need a custom version of this for your organization? "
+            "A tailored workforce AI assessment, an internal tool for your team, "
+            "or an executive workshop grounded in your actual data? "
+            "<a href='mailto:eldredgemc2@gmail.com' style='color:#4fc98e;'>Get in touch.</a>"
+            "</p>"
+            "</div>",
+            unsafe_allow_html=True,
         )
