@@ -1498,6 +1498,47 @@ with tab_analyze:
                     f"saves ~{qw['hours_saved_weekly']} hrs/wk · tools: {tools_str}"
                 )
 
+    # ── Human + Machine CTA ──────────────────────────────────────────────────
+    if "last_result" in st.session_state:
+        st.markdown(
+            "<div style='"
+            "margin-top:2rem;padding:28px 32px;"
+            "background:#0a1240;"
+            "border-left:4px solid #eeb840;"
+            "border-radius:10px;"
+            "'>"
+            "<p style='"
+            "margin:0 0 10px;"
+            "font-size:11.5px;font-weight:700;"
+            "text-transform:uppercase;letter-spacing:0.1em;"
+            "color:#eeb840;"
+            "'>Ready to act on this?</p>"
+            "<p style='"
+            "margin:0 0 20px;"
+            "color:rgba(255,255,255,0.85);"
+            "font-size:16px;line-height:1.65;"
+            "'>"
+            "This analysis took 30 seconds. Turning it into a "
+            "<strong style='color:#fff;'>"
+            "work plan that centers around lots of humans and lots of machines "
+            "working together to accomplish your goals"
+            "</strong>"
+            " takes a conversation."
+            "</p>"
+            "<a href='mailto:eldredgemc2@gmail.com"
+            "?subject=WorkAI%20Compass%20%E2%80%94%20let%27s%20talk' "
+            "style='"
+            "display:inline-block;padding:10px 22px;"
+            "background:#eeb840;color:#0a1240;"
+            "font-weight:700;font-size:14px;"
+            "border-radius:7px;text-decoration:none;"
+            "'>"
+            "Start the conversation &rarr;"
+            "</a>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
     # ── Footer ────────────────────────────────────────────────────────────────
     st.divider()
     st.caption(
