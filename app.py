@@ -348,18 +348,154 @@ def color_category(val):
     return f"background-color: {color}22; color: {color}; font-weight: 600;"
 
 
+# ── Inline SVG helpers (no CDN dependency) ────────────────────────────────────
+
+# Compass for the page header (32 px, ink-blue)
+_COMPASS_SVG_HEADER = (
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" '
+    'fill="none" stroke="#4A5580" stroke-width="1.5" stroke-linecap="round" '
+    'stroke-linejoin="round" style="flex-shrink:0;vertical-align:middle;">'
+    '<circle cx="12" cy="12" r="9"/>'
+    '<path d="M16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88z"/>'
+    '</svg>'
+)
+
+# Category icons for the sidebar (16 px, each in its category color)
+_SIDEBAR_CAT_ICONS = {
+    "LLM": (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" '
+        'fill="none" stroke="#4f8ef7" stroke-width="1.75" stroke-linecap="round" '
+        'stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;">'
+        '<path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>'
+        '<path d="M7 11h4M7 15h8"/>'
+        '</svg>'
+    ),
+    "Traditional ML": (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" '
+        'fill="none" stroke="#f7a24f" stroke-width="1.75" stroke-linecap="round" '
+        'stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;">'
+        '<circle cx="4" cy="12" r="2"/><circle cx="12" cy="4" r="2"/>'
+        '<circle cx="20" cy="12" r="2"/><circle cx="12" cy="20" r="2"/>'
+        '<path d="M6 12h4M14 12h4M12 6v4M12 14v4"/>'
+        '</svg>'
+    ),
+    "Automation": (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" '
+        'fill="none" stroke="#4fc98e" stroke-width="1.75" stroke-linecap="round" '
+        'stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;">'
+        '<path d="M21 12a9 9 0 1 1-3.5-7.15"/>'
+        '<path d="M21 3v9h-9"/>'
+        '</svg>'
+    ),
+    "Human Only": (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" '
+        'fill="none" stroke="#a0a0a0" stroke-width="1.75" stroke-linecap="round" '
+        'stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;">'
+        '<circle cx="12" cy="8" r="4"/>'
+        '<path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>'
+        '</svg>'
+    ),
+}
+
+
+def _usage_pill(used: int, total: int, label: str = "analyses") -> str:
+    """Styled HTML usage-remaining indicator to replace the emoji-dot caption."""
+    remaining = total - used
+    color = "#4fc98e" if remaining > 2 else ("#f7a24f" if remaining > 0 else "#e74c3c")
+
+    def _dot_bg(i: int) -> str:
+        return color if i < remaining else "#DDD5C8"
+
+    dots = "".join(
+        f'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;'
+        f'margin-right:3px;background:{_dot_bg(i)};"></span>'
+        for i in range(total)
+    )
+    return (
+        f'<div style="display:inline-flex;align-items:center;gap:8px;'
+        f'padding:5px 12px;background:#F0EBE3;border:1px solid #E2D9CE;'
+        f'border-radius:20px;font-size:12px;color:#6B6259;margin:6px 0;">'
+        f'<span style="display:flex;align-items:center;">{dots}</span>'
+        f'<span><strong style="color:{color}">{remaining}</strong> of {total} {label} remaining</span>'
+        f'</div>'
+    )
+
+
+def _render_task_table(df: pd.DataFrame) -> str:
+    """Custom HTML task table — replaces st.dataframe for the role analysis results."""
+    PRIORITY_CHIP = {
+        "Quick Win":   ("#2a7a4f", "#d6f3e6"),
+        "Medium Term": ("#8a5c00", "#fdeec9"),
+        "Long Term":   ("#1a3f8a", "#dce7f9"),
+    }
+    CAT_CHIP = {
+        "LLM":           ("#2650a8", "#dce7fa"),
+        "Traditional ML":("#8a5800", "#fdecc6"),
+        "Automation":    ("#1a6b42", "#d4f0e3"),
+        "Human Only":    ("#5a5a5a", "#ebebeb"),
+    }
+
+    header_style = (
+        "padding:9px 12px;text-align:left;font-size:10.5px;font-weight:700;"
+        "text-transform:uppercase;letter-spacing:0.06em;color:#8C7F74;"
+        "background:#F0EBE3;border-bottom:2px solid #E2D9CE;white-space:nowrap;"
+    )
+    headers = ["Task", "AI Method", "Why this method", "Tools", "Time", "Value", "Priority"]
+
+    rows_html = ""
+    for _, row in df.iterrows():
+        cat = row.get("category", "")
+        priority = row.get("priority", "")
+        cat_fg, cat_bg = CAT_CHIP.get(cat, ("#555", "#eee"))
+        p_fg, p_bg     = PRIORITY_CHIP.get(priority, ("#555", "#eee"))
+
+        cat_chip = (
+            f'<span style="background:{cat_bg};color:{cat_fg};padding:2px 9px;'
+            f'border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;">{cat}</span>'
+        )
+        p_chip = (
+            f'<span style="background:{p_bg};color:{p_fg};padding:2px 9px;'
+            f'border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;">{priority}</span>'
+        )
+        cell = "padding:10px 12px;border-bottom:1px solid #EDE7DC;vertical-align:top;"
+        rows_html += (
+            f'<tr class="wai-tr">'
+            f'<td style="{cell}font-weight:600;color:#2D2926;">{row.get("task","")}</td>'
+            f'<td style="{cell}">{cat_chip}</td>'
+            f'<td style="{cell}font-size:12px;color:#5A5048;max-width:260px;">{row.get("rationale","")}</td>'
+            f'<td style="{cell}font-size:12px;color:#5A5048;">{row.get("tools_str","")}</td>'
+            f'<td style="{cell}font-size:12px;white-space:nowrap;">{row.get("time_impact","")}</td>'
+            f'<td style="{cell}font-size:12px;font-weight:700;color:#2D2926;white-space:nowrap;">'
+            f'{row.get("annual_savings_fmt","")}</td>'
+            f'<td style="{cell}">{p_chip}</td>'
+            f'</tr>'
+        )
+
+    head_html = "".join(
+        f'<th style="{header_style}">{h}</th>' for h in headers
+    )
+
+    return (
+        '<style>.wai-tr:hover td{background:#EDE7DC!important;}</style>'
+        '<div style="overflow-x:auto;border:1px solid #E2D9CE;border-radius:8px;background:#FDFAF6;">'
+        '<table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;">'
+        f'<thead><tr>{head_html}</tr></thead>'
+        f'<tbody>{rows_html}</tbody>'
+        '</table></div>'
+    )
+
+
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown(
-    '<h1 style="display:flex; align-items:center; gap:10px;">'
-    '<i class="iconoir-compass" style="font-size:1.75rem; color:#4A5580; flex-shrink:0;"></i>'
-    'WorkAI Compass</h1>',
+    f'<div style="padding-bottom:2px;">'
+    f'<h1 style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">'
+    f'{_COMPASS_SVG_HEADER}WorkAI Compass</h1>'
+    f'<p style="margin:0 0 0.5rem;font-size:1rem;color:#8C7F74;font-style:italic;line-height:1.5;">'
+    f'Data-driven AI intelligence for your role, your company, and your industry — '
+    f'grounded in peer-reviewed research and government labor data.'
+    f'</p>'
+    f'</div>',
     unsafe_allow_html=True,
-)
-st.caption(
-    "Navigate AI's impact on any role — task-by-task classification using the "
-    "[PMI/CPMAI](https://www.pmi.org/certifications/ai-project-management-cpmai) "
-    "framework, ROI estimates, and occupation-level AI vulnerability data "
-    "from Manning & Aguirre (2025) / GovAI."
 )
 
 # ── Sidebar: methodology ──────────────────────────────────────────────────────
@@ -368,13 +504,24 @@ with st.sidebar:
     st.markdown(
         "**WorkAI Compass** applies the **PMI CPMAI task classification framework** "
         "to break down any role into its component tasks and assess which "
-        "delivery method fits each one.\n\n"
-        "**Four categories:**\n\n"
-        '<i class="iconoir-chat-lines"></i> **LLM** — language generation, summarization, Q&A, drafting\n\n'
-        '<i class="iconoir-brain"></i> **Traditional ML** — prediction, classification, anomaly detection\n\n'
-        '<i class="iconoir-refresh-circular"></i> **Automation** — rule-based, deterministic, scripted workflows\n\n'
-        '<i class="iconoir-user"></i> **Human Only** — relationship, negotiation, ethical judgment'
+        "delivery method fits each one."
     )
+    st.markdown("**Four categories:**")
+    _cat_descriptions = {
+        "LLM":            "language generation, summarization, Q&amp;A, drafting",
+        "Traditional ML": "prediction, classification, anomaly detection",
+        "Automation":     "rule-based, deterministic, scripted workflows",
+        "Human Only":     "relationship, negotiation, ethical judgment",
+    }
+    _cats_html = "".join(
+        f'<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:8px;">'
+        f'{_SIDEBAR_CAT_ICONS[cat]}'
+        f'<span style="font-size:13px;line-height:1.5;">'
+        f'<strong>{cat}</strong> — {desc}'
+        f'</span></div>'
+        for cat, desc in _cat_descriptions.items()
+    )
+    st.markdown(_cats_html, unsafe_allow_html=True)
     st.divider()
     st.markdown(
         "Built by [Joseph Eldredge](https://eldredgemgmtconsulting.com) · "
@@ -506,10 +653,7 @@ with tab_exec:
     )
 
     if exec_remaining > 0:
-        st.caption(
-            f"{'🟢' * exec_remaining}{'⚫' * exec_used} "
-            f"{exec_remaining} of {MAX_EXEC} free briefs remaining this session."
-        )
+        st.markdown(_usage_pill(exec_used, MAX_EXEC, "briefs"), unsafe_allow_html=True)
     else:
         st.warning(
             "You've used all 5 free executive briefs for this session. "
@@ -750,10 +894,7 @@ with tab_benchmark:
     )
 
     if bm_remaining > 0:
-        st.caption(
-            f"{'🟢' * bm_remaining}{'⚫' * bm_used} "
-            f"{bm_remaining} of {MAX_BM} free benchmarks remaining this session."
-        )
+        st.markdown(_usage_pill(bm_used, MAX_BM, "benchmarks"), unsafe_allow_html=True)
     else:
         st.warning(
             "You've used all 5 free benchmarks for this session. "
@@ -1057,10 +1198,7 @@ with tab_analyze:
         remaining = MAX_ANALYSES - used
 
         if remaining > 0:
-            st.caption(
-                f"{'🟢' * remaining}{'⚫' * used} "
-                f"{remaining} of {MAX_ANALYSES} free analyses remaining this session."
-            )
+            st.markdown(_usage_pill(used, MAX_ANALYSES, "analyses"), unsafe_allow_html=True)
         else:
             st.warning(
                 "You've used all 5 free analyses for this session. "
@@ -1311,12 +1449,10 @@ with tab_analyze:
             "complexity": "Complexity",
         }
 
-        styled = (
-            df_tasks[display_cols]
-            .rename(columns=col_labels)
-            .style.map(color_category, subset=["AI Method"])
+        st.markdown(
+            _render_task_table(df_tasks),
+            unsafe_allow_html=True,
         )
-        st.dataframe(styled, use_container_width=True, hide_index=True, height=420)
 
         # ── Expandable task detail cards ──────────────────────────────────────
         st.divider()
@@ -1454,18 +1590,18 @@ with tab_explore:
         # Quadrant labels
         fig.add_annotation(
             x=88, y=8, text="⚠️ Vulnerable zone",
-            showarrow=False, font=dict(size=11, color="rgba(220,80,80,0.8)"),
-            bgcolor="rgba(255,255,255,0.6)",
+            showarrow=False, font=dict(size=11, color="rgba(200,60,60,0.9)"),
+            bgcolor="rgba(240,235,227,0.85)",
         )
         fig.add_annotation(
             x=12, y=90, text="✅ Lower risk",
-            showarrow=False, font=dict(size=11, color="rgba(40,160,80,0.8)"),
-            bgcolor="rgba(255,255,255,0.6)",
+            showarrow=False, font=dict(size=11, color="rgba(30,140,70,0.9)"),
+            bgcolor="rgba(240,235,227,0.85)",
         )
         fig.add_annotation(
             x=88, y=90, text="High exposure,\nstrong adaptive capacity",
-            showarrow=False, font=dict(size=10, color="rgba(100,100,100,0.7)"),
-            bgcolor="rgba(255,255,255,0.6)",
+            showarrow=False, font=dict(size=10, color="rgba(80,80,80,0.8)"),
+            bgcolor="rgba(240,235,227,0.85)",
             align="center",
         )
 
