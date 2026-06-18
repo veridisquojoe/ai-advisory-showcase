@@ -85,4 +85,61 @@ PRESETS = {
             "across technical, policy, and legal teams."
         ),
     },
+    "Scrum Master": {
+        "role": "Scrum Master",
+        "industry": "Software Development",
+        "industry_group": "Technology & IT",
+        "hourly_rate": 100,
+        "context": (
+            "Scrum Master on a cross-functional software delivery team of 6–10 engineers. "
+            "Facilitates sprint ceremonies (planning, standups, reviews, retrospectives), "
+            "removes impediments, tracks velocity and burndown, manages the team's Jira board, "
+            "coaches team members on Agile practices, and interfaces with product owners and "
+            "engineering managers on delivery forecasts and process improvement."
+        ),
+    },
+    "Technical Product Owner": {
+        "role": "Technical Product Owner",
+        "industry": "Software Development",
+        "industry_group": "Technology & IT",
+        "hourly_rate": 110,
+        "context": (
+            "Technical Product Owner bridging engineering and business stakeholders for a "
+            "SaaS platform. Owns and prioritizes the product backlog, writes and refines user "
+            "stories and acceptance criteria, participates in sprint planning and reviews, "
+            "conducts stakeholder demos, tracks feature release readiness, and manages "
+            "competing priorities across engineering, design, and go-to-market teams. "
+            "Works daily in Jira, Confluence, and Figma."
+        ),
+    },
+    "Product Manager": {
+        "role": "Product Manager",
+        "industry": "Software Development / SaaS",
+        "industry_group": "Technology & IT",
+        "hourly_rate": 115,
+        "context": (
+            "Product Manager at a B2B SaaS company responsible for a core product area. "
+            "Conducts customer discovery, defines roadmap and OKRs, writes PRDs, "
+            "coordinates across engineering, design, sales, and marketing, tracks KPIs, "
+            "manages feature launches, and synthesizes customer feedback and usage data "
+            "into prioritization decisions. Spends significant time in meetings, Slack, "
+            "and documentation tools."
+        ),
+    },
+    "Technical Program Manager": {
+        "role": "Technical Program Manager",
+        "industry": "Software Development / Technology",
+        "industry_group": "Technology & IT",
+        "hourly_rate": 130,
+        "context": (
+            "Technical Program Manager (TPM) at a mid-to-large technology company, "
+            "driving delivery of a complex multi-team software initiative. Owns the "
+            "cross-team program plan, tracks dependencies and critical path, runs "
+            "weekly program syncs, escalates blockers to engineering leadership, "
+            "manages risk and scope, produces executive status reports, and coordinates "
+            "between engineering, infrastructure, security, and product teams. "
+            "Works heavily in Jira, Confluence, and slide decks. Deep enough technically "
+            "to challenge engineering estimates and flag architectural risks."
+        ),
+    },
 }
