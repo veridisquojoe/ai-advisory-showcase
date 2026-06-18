@@ -74,14 +74,14 @@ _TAB_ICON_CSS = "\n".join(
 
 # ── Custom theme (Curricula-inspired: warm parchment, editorial) ──────────────
 st.markdown(
-    f"""
+    """
     <style>
     /* ── Fonts & icon library ───────────────────────────────────────────── */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
     @import url('https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css');
 
     /* ── Tab icons (SVG mask, one per tab) ──────────────────────────────── */
-    {_TAB_ICON_CSS}
+    __TAB_ICON_CSS__
 
     html, body, [class*="css"], .stApp {
         font-family: 'Inter', sans-serif;
@@ -327,7 +327,7 @@ st.markdown(
     ::-webkit-scrollbar-thumb { background: #C5BFB5; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #A09085; }
     </style>
-    """,
+    """.replace("__TAB_ICON_CSS__", _TAB_ICON_CSS),
     unsafe_allow_html=True,
 )
 
