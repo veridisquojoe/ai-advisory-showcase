@@ -510,13 +510,19 @@ with tab_benchmark:
             nums = re.findall(r'\b([1-4](?:\.\d)?)\b', bench_text)
             bench_vals.append(float(nums[0]) if nums else 2.0)
 
+        # Convert hex tier color to rgba for fill
+        def _hex_to_rgba(hex_color: str, alpha: float) -> str:
+            h = hex_color.lstrip("#")
+            r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+            return f"rgba({r},{g},{b},{alpha})"
+
         radar_fig = go.Figure()
         radar_fig.add_trace(go.Scatterpolar(
             r=bench_vals + [bench_vals[0]],
             theta=dim_labels + [dim_labels[0]],
             fill="toself",
             name="Sector benchmark",
-            line_color="rgba(150,150,150,0.6)",
+            line=dict(color="rgba(150,150,150,0.7)"),
             fillcolor="rgba(150,150,150,0.15)",
         ))
         radar_fig.add_trace(go.Scatterpolar(
@@ -524,8 +530,8 @@ with tab_benchmark:
             theta=dim_labels + [dim_labels[0]],
             fill="toself",
             name="Your organization",
-            line_color=tier_c,
-            fillcolor=f"{tier_c}33",
+            line=dict(color=tier_c),
+            fillcolor=_hex_to_rgba(tier_c, 0.2),
         ))
         radar_fig.update_layout(
             polar=dict(radialaxis=dict(visible=True, range=[0, 4], tickvals=[1,2,3,4],
