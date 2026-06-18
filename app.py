@@ -9,6 +9,7 @@ Run with:
 """
 
 import re
+import base64
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -34,12 +35,53 @@ st.set_page_config(
     layout="wide",
 )
 
+# ── Tab icon SVGs (Iconoir-style, 24×24 stroke paths) ─────────────────────────
+def _icon_uri(svg: str) -> str:
+    return "data:image/svg+xml;base64," + base64.b64encode(svg.encode()).decode()
+
+_TAB_SVGS = [
+    # 1 — Analyze a Role: magnifying glass + crosshair (analyze / discover)
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/><path d="M10.5 7.5v6M7.5 10.5h6"/></svg>',
+    # 2 — Executive AI Brief: folded document (brief / report)
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 12h5M8 16h4"/></svg>',
+    # 3 — AI Adoption Benchmark: bar chart (compare / benchmark)
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21v-7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7"/><path d="M11 21V9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12"/><path d="M17 21V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v16"/></svg>',
+    # 4 — Explore All Occupations: globe with meridians
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8"/><path d="M11.5 3C9 6 7.5 9 7.5 12s1.5 6 4 9"/><path d="M12.5 3C15 6 16.5 9 16.5 12s-1.5 6-4 9"/></svg>',
+    # 5 — About: open book
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M12 7C10 4.5 7.5 3.5 4 4v14c3.5-.5 6 .5 8 3"/><path d="M12 7c2-2.5 4.5-3.5 8-3v14c-3.5-.5-6 .5-8 3"/></svg>',
+]
+
+_TAB_ICON_CSS = "\n".join(
+    f""".stTabs [data-baseweb="tab-list"] button:nth-of-type({i + 1})::before {{
+        content: '';
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        margin-right: 6px;
+        vertical-align: -3px;
+        flex-shrink: 0;
+        background-color: currentColor;
+        -webkit-mask-image: url("{_icon_uri(svg)}");
+        mask-image: url("{_icon_uri(svg)}");
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+    }}"""
+    for i, svg in enumerate(_TAB_SVGS)
+)
+
 # ── Custom theme (Curricula-inspired: warm parchment, editorial) ──────────────
 st.markdown(
-    """
+    f"""
     <style>
-    /* ── Fonts ──────────────────────────────────────────────────────────── */
+    /* ── Fonts & icon library ───────────────────────────────────────────── */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+    @import url('https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css');
+
+    /* ── Tab icons (SVG mask, one per tab) ──────────────────────────────── */
+    {_TAB_ICON_CSS}
 
     html, body, [class*="css"], .stApp {
         font-family: 'Inter', sans-serif;
@@ -307,7 +349,12 @@ def color_category(val):
 
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.title("🧭 WorkAI Compass")
+st.markdown(
+    '<h1 style="display:flex; align-items:center; gap:10px;">'
+    '<i class="iconoir-compass" style="font-size:1.75rem; color:#4A5580; flex-shrink:0;"></i>'
+    'WorkAI Compass</h1>',
+    unsafe_allow_html=True,
+)
 st.caption(
     "Navigate AI's impact on any role — task-by-task classification using the "
     "[PMI/CPMAI](https://www.pmi.org/certifications/ai-project-management-cpmai) "
@@ -323,10 +370,10 @@ with st.sidebar:
         "to break down any role into its component tasks and assess which "
         "delivery method fits each one.\n\n"
         "**Four categories:**\n\n"
-        "🔵 **LLM** — language generation, summarization, Q&A, drafting\n\n"
-        "🟠 **Traditional ML** — prediction, classification, anomaly detection\n\n"
-        "🟢 **Automation** — rule-based, deterministic, scripted workflows\n\n"
-        "⚪ **Human Only** — relationship, negotiation, ethical judgment"
+        '<i class="iconoir-chat-lines"></i> **LLM** — language generation, summarization, Q&A, drafting\n\n'
+        '<i class="iconoir-brain"></i> **Traditional ML** — prediction, classification, anomaly detection\n\n'
+        '<i class="iconoir-refresh-circular"></i> **Automation** — rule-based, deterministic, scripted workflows\n\n'
+        '<i class="iconoir-user"></i> **Human Only** — relationship, negotiation, ethical judgment'
     )
     st.divider()
     st.markdown(
@@ -336,11 +383,11 @@ with st.sidebar:
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
 tab_analyze, tab_exec, tab_benchmark, tab_explore, tab_about = st.tabs([
-    "🎯 Analyze a Role",
-    "💼 Executive AI Brief",
-    "📊 AI Adoption Benchmark",
-    "🗺️ Explore All Occupations",
-    "ℹ️ About",
+    "Analyze a Role",
+    "Executive AI Brief",
+    "AI Adoption Benchmark",
+    "Explore All Occupations",
+    "About",
 ])
 
 
