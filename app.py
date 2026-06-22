@@ -529,6 +529,11 @@ with st.sidebar:
         "Built by [Joseph Eldredge](https://eldredgemgmtconsulting.com) · "
         "PMP, CPMAI · AI impact advisory for all kinds of organizations."
     )
+    st.caption(
+        "⏱️ **First visit?** This app runs on Streamlit Community Cloud's free tier "
+        "and may take 30–60 seconds to wake up after a period of inactivity. "
+        "Hang tight — it's worth the wait."
+    )
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
 tab_analyze, tab_exec, tab_benchmark, tab_explore, tab_about = st.tabs([
