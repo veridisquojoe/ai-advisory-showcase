@@ -14,6 +14,7 @@ For a given role and workflow description, Claude:
 import os
 import json
 import anthropic
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -103,6 +104,7 @@ def _get_api_key() -> str:
     return key
 
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def classify_role(role: str, industry: str = "", context: str = "", hourly_rate: float = 75.0) -> dict:
     """
     Run the full classification pipeline for a given role.

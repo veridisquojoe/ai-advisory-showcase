@@ -14,6 +14,7 @@ Takes a 5-dimension self-assessment + company profile and returns:
 import os
 import json
 import anthropic
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -109,6 +110,7 @@ def score_to_tier(total: int) -> str:
         return "AI Native"
 
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def generate_benchmark(
     industry: str,
     company_type: str,

@@ -35,6 +35,9 @@ st.set_page_config(
     layout="wide",
 )
 
+# ── Branding ──────────────────────────────────────────────────────────────────
+st.logo("assets/logo.svg", link="https://eldredgemgmt.com")
+
 # ── Tab icon SVGs (Iconoir-style, 24×24 stroke paths) ─────────────────────────
 def _icon_uri(svg: str) -> str:
     return "data:image/svg+xml;base64," + base64.b64encode(svg.encode()).decode()

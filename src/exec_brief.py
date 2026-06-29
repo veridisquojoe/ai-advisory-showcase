@@ -11,6 +11,7 @@ rather than a task-level breakdown.
 import os
 import json
 import anthropic
+import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -85,6 +86,7 @@ def _get_api_key() -> str:
     return key
 
 
+@st.cache_data(ttl=3600, show_spinner=False)
 def generate_exec_brief(
     industry: str,
     company_type: str,
